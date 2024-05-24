@@ -2,6 +2,7 @@ package dominio;
 
 import java.util.LinkedHashSet;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 public class Dev {
@@ -10,11 +11,23 @@ public class Dev {
     private Set<Conteudo> completedContent = new LinkedHashSet<>();
 
     public void subscribeBootcamp(Bootcamp bootcamp) {
+        this.subscribedContent.addAll(bootcamp.getContent());
+        bootcamp.getSubscribedDevs().add(this);
     }
 
-    public void progression(){};
+    public void progression(){
+        Optional<Conteudo> content = this.subscribedContent.stream().findFirst();
+        if(content.isPresent()){
+            this.completedContent.add(content.get());
+            this.subscribedContent.remove(content.get());
+        } else {
+            System.err.println("Você não está matriculado em nenhum conteúdo");
+        }
+    };
 
-    public void calculateTotalXp(){};
+    public double calculateTotalXp(){
+        return this.completedContent.stream().mapToDouble(Conteudo::calculateXp).sum();
+    };
 
     public String getName() {
         return name;

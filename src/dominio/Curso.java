@@ -17,8 +17,8 @@ public class Curso extends Conteudo {
     @Override
     public String toString() {
         return "Curso{" +
-                "title='" + title + '\'' +
-                ", description='" + description + '\'' +
+                "title='" + getTitle() + '\'' +
+                ", description='" + getDescription() + '\'' +
                 ", duration=" + duration +
                 '}';
     }
